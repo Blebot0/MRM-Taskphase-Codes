@@ -1,0 +1,53 @@
+import cv2 as cv
+import numpy as np
+from matplotlib import pyplot as plt
+
+cap = cv.VideoCapture(-1)
+cap.set(3,1280)
+cap.set(4,700)
+
+while(cap.isOpened()):
+    ret,frame = cap.read()
+    if ret == True:
+        #CHANGING BGR TO HSV
+        hsv_frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+
+        #CREATING MASK RANGE
+        mask = cv.inRange(hsv_frame, (25, 62, 58), (80, 255, 255))#31,136,59  126,255,255
+        res = cv.bitwise_and(frame, frame, mask=mask)
+
+        #CREATING KERNEL
+        kernel = np.ones((5, 5), np.uint8)
+
+        #CREATING EROSION
+        erosion = cv.erode(res, kernel, iterations=2)
+        dilation = cv.dilate(erosion, kernel, iterations=1)
+
+        #CREATING TO OPENING
+        opening = cv.morphologyEx(dilation, cv.MORPH_OPEN, kernel)
+
+        #HOUGH CIRCLE
+        hough = cv.cvtColor(opening,cv.COLOR_BGR2GRAY)
+        output = opening.copy()
+
+        circles = cv.HoughCircles(hough, cv.HOUGH_GRADIENT, 1, 250, param1=50, param2=35, minRadius=20, maxRadius=100)
+        count=1
+        if(circles is not None):
+            circles= np.uint16(np.round(circles))
+            for (x,y,r) in circles[0, :]:
+                cv.circle(output, (x,y),r,(0,255,0),3)
+                cv.circle(output, (x,y), 2, (0, 0, 255), 3)
+                cv.putText(output, "BALL " + str(count), (x,y), cv.FONT_HERSHEY_SIMPLEX, 0.8,(255, 255, 255), 2)
+                count+=1
+
+        #OPENING FINAL IMAGE
+        cv.imshow('Frame', opening)
+        cv.imshow('Detected circles', output)
+
+        #GETIING OUT WITH PRESSING Q
+        if cv.waitKey(1) & 0xFF == ord('q'):
+            break
+    else:
+        break
+cap.release()
+cv.destroyAllWindows()
