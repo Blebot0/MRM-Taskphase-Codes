@@ -24,11 +24,11 @@ while (cap.isOpened()):
         res = cv.medianBlur(res, 5)
         for cnt in contours:
             x, y, w, h = cv.boundingRect(cnt)
-            if w > 45 and h > 45:
-                x = x - 60
-                y = y - 60
-                w = w + 150
-                h = h + 150
+            if w > 20 and h > 20:
+                x = x - 80
+                y = y - 80
+                w = w + 220
+                h = h + 220
                 X = x
                 Y = y
                 W = w
@@ -39,7 +39,8 @@ while (cap.isOpened()):
                     circles = np.uint16(np.around(circles))
                     for (x, y, r) in circles[0, :]:
                         if x<X+H and y<W+Y and x>X and y>Y:
-                            cv.putText(res, "BALL DETECTED", (x, y), cv.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+                            #cv.putText(res, "BALL DETECTED", (x, y), cv.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+                            cv.putText(res, "BALL DETECTED", (500,20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
                             cv.circle(res, (x, y), r, (0, 255, 0), 3)
                             cv.circle(res, (x, y), 2, (0, 0, 255), 3)
         # output= cv.bitwise_or(res,output,)
