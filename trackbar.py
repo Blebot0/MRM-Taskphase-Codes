@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import cv2 as cv
+=======
+mport
+cv2 as cv
+>>>>>>> origin/master
 import numpy as np
 
 
