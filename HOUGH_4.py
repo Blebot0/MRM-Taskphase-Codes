@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-cap = cv.VideoCapture(-1)
+cap = cv.VideoCapture(0)
 cap.set(3, 640)
 cap.set(4, 480)
 while (cap.isOpened()):
@@ -18,7 +18,7 @@ while (cap.isOpened()):
         # CONTOUR
         gray = cv.cvtColor(res, cv.COLOR_BGR2GRAY)
         ret, thresh = cv.threshold(gray, 127, 255, 0)
-        contours, hierarchy = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+        image, contours, hierarchy = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
         hough = cv.cvtColor(res, cv.COLOR_BGR2GRAY)
         # output = res.copy()
         res = cv.medianBlur(res, 5)
