@@ -7,6 +7,8 @@ def nothing(x):
 
 
 cap = cv.VideoCapture(-1)
+cap.set(3,400)
+cap.set(4,300)
 
 cv.namedWindow('Tracking')
 cv.createTrackbar('LH', 'Tracking', 0, 255, nothing)
