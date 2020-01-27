@@ -18,9 +18,6 @@ cv.createTrackbar('UH', 'Tracking', 255, 255, nothing)
 cv.createTrackbar('US', 'Tracking', 255, 255, nothing)
 cv.createTrackbar('UV', 'Tracking', 255, 255, nothing)
 
-cap.set(3, 1280)
-cap.set(4, 700)
-
 while (cap.isOpened()):
     ret, frame = cap.read()
     if ret == True:
@@ -49,4 +46,4 @@ while (cap.isOpened()):
     else:
         break
 cap.release()
-cv.destroyAllWindows
+cv.destroyAllWindows()
