@@ -7,10 +7,9 @@ cap = cv2.VideoCapture(0)
 
 cap.set(3, 400)
 cap.set(4, 300)
-s = socket.socket()
+s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 s.bind(('', 2000))
-s.listen(4)
-a, c = s.accept()
+data,addr = s.recvfrom(1024)
 flag = 0
 if cap.isOpened()== True:
     print("Y")
@@ -20,9 +19,9 @@ while(True):
 
         frame = cv2.imencode('.jpeg', frame)
         frame = pickle.dumps(frame)
-        a.sendall(frame)
+        addr.sendall(frame)
         aja = pickle.dumps("stop")
-        a.sendall(aja)
+        addr.sendall(aja)
 
 a.close()
 cap.release()
