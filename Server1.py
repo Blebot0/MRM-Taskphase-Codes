@@ -9,7 +9,7 @@ cap = cv2.VideoCapture(0)
 cap.set(3, 200)
 cap.set(4, 150)
 s = socket.socket()
-s.bind(('localhost', 2021))
+s.bind(('', 2025))
 s.listen(4)
 a, c = s.accept()
 flag = 0
