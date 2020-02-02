@@ -21,7 +21,7 @@ while (cap.isOpened()):
         res = cv.erode(res, kernel, iterations=2)
         res = cv.dilate(res, kernel, iterations=2)
         # CONTOUR
-        image, contours, hierarchy = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+        contours, hierarchy = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
         hough = cv.cvtColor(res, cv.COLOR_BGR2GRAY)
         # output = res.copy()
         res = cv.medianBlur(res, 5)
