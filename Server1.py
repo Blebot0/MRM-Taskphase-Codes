@@ -6,8 +6,8 @@ import base64
 
 cap = cv2.VideoCapture(0)
 
-cap.set(3, 400)
-cap.set(4, 300)
+cap.set(3, 200)
+cap.set(4, 150)
 s = socket.socket()
 s.bind(('localhost', 2021))
 s.listen(4)
