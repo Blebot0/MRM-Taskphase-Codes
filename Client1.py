@@ -8,10 +8,9 @@ import numpy as np
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(('192.168.43.58', 2020))
-#s.connect(('localhost', 2020))
+
 
 flag=0
-
 while True:
     data = []
     print("a")
