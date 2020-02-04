@@ -1,4 +1,5 @@
 import pygame
+import serial
 
 pygame.init()
 print("Joystics: ", pygame.joystick.get_count())
@@ -6,6 +7,11 @@ my_joystick = pygame.joystick.Joystick(0)
 my_joystick.init()
 clock = pygame.time.Clock()
 
+def send(var):
+    ser = serial.Serial('/dev/ttyUSB0')
+    var = str(var)
+    var = var.encode()
+    ser.write(var)
 
 def map(x, in_min, in_max, out_min, out_max):
     return int((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
@@ -54,5 +60,12 @@ if __name__ == "__main__":
             left= constrain(left,-255,255)
             right = constrain(right,-255,255)
             print(right," ", left)
+
+            send(right)
+            send(left)
+
+
+
+
 
 pygame.quit()
