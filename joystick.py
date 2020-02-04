@@ -26,7 +26,7 @@ if __name__ == "__main__":
             y = my_joystick.get_axis(1)
             x = -1 * map(x, -1, 1, -1023, 1023)
             y = map(y, -1, 1, -1023, 1023)
-            clock.tick(100)
+            clock.tick(1000)
 
             right=0
             left=0
@@ -38,7 +38,6 @@ if __name__ == "__main__":
                 right = map(y, 0, -1023, 0, -255)
                 left = map(y, 0, -1023, 0, -255)
 
-
             else:
                 right=0
                 left=0
@@ -46,7 +45,6 @@ if __name__ == "__main__":
                 X = map(x, 0, -1023, 0, 255)
                 right = right + X
                 left = left - X
-
 
             elif x > 0:
                 X = map(x, 0, 1023, 0, 255)
