@@ -15,6 +15,7 @@ def send(var):
     ser.write(var)
 
 
+
 def map(x, in_min, in_max, out_min, out_max):
     return int((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
@@ -25,6 +26,34 @@ def constrain(var, min, max):
     elif var < min:
         var = min
     return var
+
+
+def directionC(var):
+    if var <0:
+        var= abs(var)
+        var = str(var)
+        var = var + "0"
+    else:
+        var = str(var)
+        var = var+ "1"
+    return int(var)
+
+
+def ZeroAddandSend(var):
+    if var > -10 and var < 10:
+        var = str(var)
+        var = "00" + var
+        send(var)
+
+
+    elif var > -100 and var < 100:
+        var = str(var)
+        var = "0" + var
+        send(var)
+
+    elif var > 100 and var < -100:
+        var = str(var)
+        send(var)
 
 
 if __name__ == "__main__":
@@ -63,48 +92,11 @@ if __name__ == "__main__":
             right = constrain(right, -255, 255)
             print(right, " ", left)
 
-            if right>-10 and right<10:
-                if right<0:
-                    right= abs(right)
-                    right = str(right)
-                    right = "00" + right + "0"
-                elif right>0:
-                    right = str(right)
-                    right = "00" + right + "1"
-                send(right)
-                right = int(right)
 
-            if left>-10 and left<10:
-                if left<0:
-                    left= abs(left)
-                    left = str(left)
-                    left = "00" + left + "0"
-                elif left>0:
-                    left = str(left)
-                    left = "00" + left + "1"
-                send(left)
-                left = int(left)
+            right= directionC(right)
+            left = directionC(left)
 
-            if right>-100 and right<100:
-                if right<0:
-                    right=abs(right)
-                    right = str(right)
-                    right = "0" + right + "0"
-                elif right>0:
-                    right = str(right)
-                    right = "0" + right + "1"
-                send(right)
-                right = int(right)
-
-            if left>-10 and left<10:
-                if left<0:
-                    left =abs(left)
-                    left = str(left)
-                    left = "0" + left + "0"
-                elif left>0:
-                    left = str(left)
-                    left = "0" + left + "1"
-                send(left)
-                left = int(left)
+            ZeroAddandSend(right)
+            ZeroAddandSend(left)
 
 pygame.quit()
