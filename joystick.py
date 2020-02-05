@@ -36,8 +36,8 @@ if __name__ == "__main__":
             y = map(y, -1, 1, -1023, 1023)
             clock.tick(1000)
 
-            right=0
-            left=0
+            right = 0
+            left = 0
             if y > 0:
                 right = map(y, 0, 1023, 0, 255)
                 left = map(y, 0, 1023, 0, 255)
@@ -64,26 +64,46 @@ if __name__ == "__main__":
             print(right, " ", left)
 
             if right>-10 and right<10:
-                right = str(right)
-                right = "00" +right
+                if right<0:
+                    right= abs(right)
+                    right = str(right)
+                    right = "00" + right + "0"
+                elif right>0:
+                    right = str(right)
+                    right = "00" + right + "1"
                 send(right)
                 right = int(right)
 
-            elif left>-10 and left<10:
-                left = str(left)
-                left = "00" + left
+            if left>-10 and left<10:
+                if left<0:
+                    left= abs(left)
+                    left = str(left)
+                    left = "00" + left + "0"
+                elif left>0:
+                    left = str(left)
+                    left = "00" + left + "1"
                 send(left)
                 left = int(left)
 
-            elif right>-100 and right<100:
-                right = str(right)
-                right = "0" +right
+            if right>-100 and right<100:
+                if right<0:
+                    right=abs(right)
+                    right = str(right)
+                    right = "0" + right + "0"
+                elif right>0:
+                    right = str(right)
+                    right = "0" + right + "1"
                 send(right)
                 right = int(right)
 
-            elif left>-10 and left<10:
-                left = str(left)
-                left = "0" + left
+            if left>-10 and left<10:
+                if left<0:
+                    left =abs(left)
+                    left = str(left)
+                    left = "0" + left + "0"
+                elif left>0:
+                    left = str(left)
+                    left = "0" + left + "1"
                 send(left)
                 left = int(left)
 
