@@ -11,8 +11,7 @@ clock = pygame.time.Clock()
 
 def send(var):
     ser = serial.Serial('/dev/ttyUSB0')
-    var= str(var)
-    var = var.encode()
+    var = var.to_bytes(8, 'big', signed=True)
     ser.write(var)
 
 
@@ -44,7 +43,7 @@ def ZeroAddandSend(var, var2):
     var2 = "{0:0=4d}".format(var2)
     var = str(var)
     var2 = str(var2)
-    var = "b" + var + "c" + var2
+    var = var + var2
     time.sleep(0.05)
     send(var)
     print(var)
@@ -92,3 +91,4 @@ if __name__ == "__main__":
             ZeroAddandSend(right, left)
 
 pygame.quit()
+
