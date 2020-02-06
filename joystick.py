@@ -36,7 +36,6 @@ def directionC(var):
     else:
         var = str(var)
         var = var + "1"
-    var = "b" + var
     return int(var)
 
 
@@ -45,7 +44,7 @@ def ZeroAddandSend(var, var2):
     var2 = "{0:0=4d}".format(var2)
     var = str(var)
     var2 = str(var2)
-    var = var + var2
+    var = "b" + var + "c" + var2
     time.sleep(0.05)
     send(var)
     print(var)
