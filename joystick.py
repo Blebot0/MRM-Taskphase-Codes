@@ -1,5 +1,6 @@
 import pygame
 import serial
+import time
 
 pygame.init()
 print("Joystics: ", pygame.joystick.get_count())
@@ -10,10 +11,9 @@ clock = pygame.time.Clock()
 
 def send(var):
     ser = serial.Serial('/dev/ttyUSB0')
-    var = str(var)
+    var= str(var)
     var = var.encode()
     ser.write(var)
-
 
 
 def map(x, in_min, in_max, out_min, out_max):
@@ -29,31 +29,26 @@ def constrain(var, min, max):
 
 
 def directionC(var):
-    if var <0:
-        var= abs(var)
+    if var <= 0:
+        var = abs(var)
         var = str(var)
         var = var + "0"
     else:
         var = str(var)
-        var = var+ "1"
+        var = var + "1"
+    var = "b" + var
     return int(var)
 
 
-def ZeroAddandSend(var):
-    if var > -10 and var < 10:
-        var = str(var)
-        var = "00" + var
-        send(var)
-
-
-    elif var > -100 and var < 100:
-        var = str(var)
-        var = "0" + var
-        send(var)
-
-    elif var > 100 and var < -100:
-        var = str(var)
-        send(var)
+def ZeroAddandSend(var, var2):
+    var = "{0:0=4d}".format(var)
+    var2 = "{0:0=4d}".format(var2)
+    var = str(var)
+    var2 = str(var2)
+    var = var + var2
+    time.sleep(0.05)
+    send(var)
+    print(var)
 
 
 if __name__ == "__main__":
@@ -63,7 +58,7 @@ if __name__ == "__main__":
             y = my_joystick.get_axis(1)
             x = -1 * map(x, -1, 1, -1023, 1023)
             y = map(y, -1, 1, -1023, 1023)
-            clock.tick(1000)
+            clock.tick(120)
 
             right = 0
             left = 0
@@ -88,15 +83,13 @@ if __name__ == "__main__":
                 right = right - X
                 left = left + X
 
-            left= constrain(left, -255, 255)
+            left = constrain(left, -255, 255)
             right = constrain(right, -255, 255)
-            print(right, " ", left)
+            #            print(right, " ", left)
 
-
-            right= directionC(right)
+            right = directionC(right)
             left = directionC(left)
 
-            ZeroAddandSend(right)
-            ZeroAddandSend(left)
+            ZeroAddandSend(right, left)
 
 pygame.quit()
