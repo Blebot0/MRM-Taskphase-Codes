@@ -11,7 +11,8 @@ clock = pygame.time.Clock()
 ser = serial.Serial('/dev/ttyUSB0')
 def send(var):
 
-    var = var.to_bytes(8, 'big', signed=True)
+    var= str(var)
+    var = var.encode()
     ser.write(var)
 
 
@@ -43,8 +44,8 @@ def ZeroAddandSend(var, var2):
     var2 = "{0:0=4d}".format(var2)
     var = str(var)
     var2 = str(var2)
-    var = var + var2
-    time.sleep(0.05)
+    var = "b" + var + "c" + var2
+    time.sleep(0.03)
     send(var)
     print(var)
 
@@ -56,7 +57,7 @@ if __name__ == "__main__":
             y = my_joystick.get_axis(1)
             x = -1 * map(x, -1, 1, -1023, 1023)
             y = map(y, -1, 1, -1023, 1023)
-            clock.tick(120)
+            clock.tick(1000)
 
             right = 0
             left = 0
@@ -91,4 +92,3 @@ if __name__ == "__main__":
             ZeroAddandSend(right, left)
 
 pygame.quit()
-
