@@ -43,7 +43,7 @@ while True:
                 if right_dir == 0 :
                     p2.ChangeDutyCycle(right)
                 elif right_dir == 1:
-                    p2.ChangeDutyCycle(right)
+                    p4.ChangeDutyCycle(right)
 
                 if left_dir == 0:
                     p1.ChangeDutyCycle(left)
