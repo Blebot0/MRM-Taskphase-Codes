@@ -1,5 +1,5 @@
-int X1 = A0; 
 int Y1 = A1; 
+
 int A = 6,B=5,C=10,D=11;
 //A  B
 //C  D
@@ -314,3 +314,4 @@ Serial.println("Octet 8");
 
 }
 }
+*/
