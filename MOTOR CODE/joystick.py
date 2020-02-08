@@ -9,6 +9,8 @@ my_joystick.init()
 clock = pygame.time.Clock()
 
 ser = serial.Serial('/dev/ttyUSB0')
+
+
 def send(var):
 
     var= str(var)

@@ -8,6 +8,7 @@ GPIO.setup(18, GPIO.OUT)
 GPIO.setup(13,GPIO.OUT)
 GPIO.setup(19, GPIO.OUT)
 GPIO.setup(12,GPIO.OUT)
+GPIO.setwarnings(False)
 
 p1 = GPIO.PWM(18,500)
 p2 = GPIO.PWM(19,500)
