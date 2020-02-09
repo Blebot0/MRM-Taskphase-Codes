@@ -11,8 +11,8 @@ while True:
         lon= line[5]
         lat= float(lat)
         lon = float(lon)
-        lat = lat%100
-        lon = lon%100
+        lat = lat/100
+        lon = lon/100
 
         coord = (lat, lon)
         coord2=(13.34776166 , 74.79217166)
