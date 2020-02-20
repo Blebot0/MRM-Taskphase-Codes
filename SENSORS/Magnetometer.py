@@ -1,4 +1,8 @@
-bus = smbus.SMBus(1)
+import smbus2
+import math
+import time
+
+bus = smbus2.SMBus(1)
 
 dev_add = 0x1E
 reg_A = 0x00
