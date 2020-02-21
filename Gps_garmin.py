@@ -17,7 +17,8 @@ def gps():
 
             coord = (lat, lon)
             coord2=(0, 0)
+            dist= haversine(coord, coord2)
             print(haversine(coord, coord2))
             print("Latitude: ", lat,"N")
             print("Longitude: ", lon,"E")
-    return lat, lon
+    return lat, lon, dist

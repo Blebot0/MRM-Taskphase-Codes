@@ -12,14 +12,11 @@ mode_reg = 0x02
 bus.write_byte_data(dev_add, reg_A, 0x70)
 bus.write_byte_data(dev_add, reg_B, 0xA0)
 bus.write_byte_data(dev_add, mode_reg, 0x00)
-
-declination = -0.00669
-pi =3.14159265359
-
-time.sleep(0.6)
-
 def Mag_angle():
+    declination = -0.00669
+    pi =3.14159265359
 
+    time.sleep(0.6)
     def read(addr):
         data=bus.read_i2c_block_data(dev_add, reg_B, 8)
         high = data[addr]
