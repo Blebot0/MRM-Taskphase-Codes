@@ -23,7 +23,8 @@ while 1:
     declination = -0.00669
     pi = 3.14159265359
     time.sleep(0.6)
-    mag_angle=0
+    mag_angle = 0
+
     def read(addr):
         data = bus.read_i2c_block_data(dev_add, reg_B, 8)
         high = data[addr]
@@ -36,24 +37,24 @@ while 1:
             value = value - 65536
         return value
     try:
-        x = read(2)
-        y = read(4)
-        z = read(6)
-        # print(x,y,z)
+        while 1:
+            x = read(2)
+            y = read(4)
+            z = read(6)
+            # print(x,y,z)
 
-        heading = math.atan2(y, x) + declination
+            heading = math.atan2(y, x) + declination
 
-        # Due to declination check for >360 degree
-        if (heading > 2 * pi):
-            heading = heading - 2 * pi
+            # Due to declination check for >360 degree
+            if (heading > 2 * pi):
+                heading = heading - 2 * pi
 
-            # check for sign
-        if (heading < 0):
-            heading = heading + 2 * pi
+                # check for sign
+            if (heading < 0):
+                heading = heading + 2 * pi
 
-            # convert into angle
-        mag_angle = heading * 180.00000000 / pi
-        #print("Heading Angle = %d°" % heading_angle)
+                # convert into angle
+            mag_angle = heading * 180.00000000 / pi
     except:
         pass
 
@@ -85,8 +86,8 @@ while 1:
 
     bearing = math.degrees(math.atan2(x, y))
     gps_angle = (bearing + 360) / 360
-    print("Distance: ",dist)
-    print(abs("Angle: ",Angle_diff))
+    print("Distance: ", dist)
+    print(abs("Angle: ", Angle_diff))
 
     if Angle_diff > 0:
         if Angle_diff < 180:
