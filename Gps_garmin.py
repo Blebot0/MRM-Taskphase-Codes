@@ -14,10 +14,7 @@ def gps():
             lon = float(lon)
             lat = lat/100
             lon = lon/100
-
             coord = (lat, lon)
-            coord2=(13.34776166 , 74.79217166)
-            print(haversine(coord, coord2))
             print("Latitude: ", lat,"N")
             print("Longitude: ", lon,"E")
     return lat, lon
