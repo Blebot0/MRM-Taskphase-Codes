@@ -84,9 +84,9 @@ while 1:
     y = math.cos(lat1) * math.sin(lat2) - (math.sin(lat1) * math.cos(lat2) * math.cos(lon_change))
 
     bearing = math.degrees(math.atan2(x, y))
-    gps_angle = (bearing + 360) * 360 
-    print(dist)
-    print(abs(Angle_diff))
+    gps_angle = (bearing + 360) / 360
+    print("Distance: ",dist)
+    print(abs("Angle: ",Angle_diff))
 
     if Angle_diff > 0:
         if Angle_diff < 180:
