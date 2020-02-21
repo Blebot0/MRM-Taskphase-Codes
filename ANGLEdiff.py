@@ -19,12 +19,11 @@ bus.write_byte_data(dev_add, reg_B, 0xA0)
 bus.write_byte_data(dev_add, mode_reg, 0x00)
 
 
-def Mag_angle():
+while 1:
     declination = -0.00669
     pi = 3.14159265359
-
     time.sleep(0.6)
-
+    mag_angle=0
     def read(addr):
         data = bus.read_i2c_block_data(dev_add, reg_B, 8)
         high = data[addr]
@@ -36,7 +35,6 @@ def Mag_angle():
         if (value > 32768):
             value = value - 65536
         return value
-
     try:
         x = read(2)
         y = read(4)
@@ -54,19 +52,15 @@ def Mag_angle():
             heading = heading + 2 * pi
 
             # convert into angle
-        heading_angle = heading * 180.00000000 / pi
-
-        print("Heading Angle = %d°" % heading_angle)
-        return heading_angle
+        mag_angle = heading * 180.00000000 / pi
+        #print("Heading Angle = %d°" % heading_angle)
     except:
         pass
-
-
-while 1:
 
     line = gps.readline()
     line = line.decode('utf-8')
     line = line.split(",")
+
     if line[0] == "$GPRMC":
         lat= line[3]
         lon= line[5]
@@ -77,14 +71,7 @@ while 1:
         coord = (lat1, lon1)
         coord2=(13.34786166, 74.7921699)
         dist= haversine(coord, coord2)
-            #print(haversine(coord, coord2))
-            #print("Latitude: ", lat,"N")
-            #print("Longitude: ", lon,"E")
 
-
-
-
-    mag_angle = Mag_angle()
     Angle_diff = mag_angle - gps_angle
 
     lat2 = 13.34786166
@@ -97,7 +84,7 @@ while 1:
     y = math.cos(lat1) * math.sin(lat2) - (math.sin(lat1) * math.cos(lat2) * math.cos(lon_change))
 
     bearing = math.degrees(math.atan2(x, y))
-    gps_angle = (bearing + 360) * 360
+    gps_angle = (bearing + 360) * 360 
     print(dist)
     print(abs(Angle_diff))
 
