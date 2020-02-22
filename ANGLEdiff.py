@@ -6,7 +6,7 @@ import time
 
 
 gps = serial.Serial("/dev/ttyUSB0",4800)
-
+gps.flushInput()
 dev_add = 0x1E
 reg_A = 0x00
 reg_B = 0x01
@@ -64,7 +64,6 @@ def mag_angle():
 while 1:
 
     mag_angle= mag_angle()
-
     line = gps.readline()
     line = line.decode('utf-8')
     line = line.split(",")
@@ -77,12 +76,12 @@ while 1:
         lat1 = lat/100
         lon1 = lon/100
         coord = (lat1, lon1)
-        coord2 = (13.34786166, 74.7921699)
+        coord2 = (13.208807, 74.475185)
         dist = haversine(coord, coord2)
 
 
-        lat2 = 13.34786166
-        lon2 = 74.79216999
+        lat2 = 13.208807
+        lon2 = 74.475185
 
         lon_change = math.radians(lon2 - lon1)
         lat_change = math.radians(lat2 - lat1)
