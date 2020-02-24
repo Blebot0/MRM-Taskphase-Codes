@@ -94,7 +94,7 @@ while 1:
         Angle_diff = mag_angle - gps_angle
 
         print("Distance: ", dist)
-        print(abs("Angle: ", Angle_diff))
+        print("ANGLE: ",abs(Angle_diff))
 
         if Angle_diff > 0:
             if Angle_diff < 180:

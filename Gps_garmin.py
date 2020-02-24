@@ -16,7 +16,8 @@ def gps():
             lon = lon/100
 
             coord = (lat, lon)
-            coord2=(0, 0)
+            #13.208807, 74.475185
+            coord2=(13.208807, 74.475185)
             dist= haversine(coord, coord2)
             print(haversine(coord, coord2))
             print("Latitude: ", lat,"N")
