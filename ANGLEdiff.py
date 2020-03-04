@@ -1,6 +1,6 @@
 import serial
 from haversine import haversine, Unit
-import smbus
+import smbus2
 import math
 import time
 
@@ -12,7 +12,7 @@ reg_A = 0x00
 reg_B = 0x01
 mode_reg = 0x02
 
-bus = smbus.SMBus(1)
+bus = smbus2.SMBus(1)
 
 bus.write_byte_data(dev_add, reg_A, 0x70)
 bus.write_byte_data(dev_add, reg_B, 0xA0)
