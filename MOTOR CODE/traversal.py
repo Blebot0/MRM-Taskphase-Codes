@@ -2,7 +2,7 @@ import Gps_garmin
 import math
 import AngleHead
 import time
-
+math.degrees()
 time.sleep(3)
 
 while 1:
@@ -20,7 +20,7 @@ while 1:
     y = math.cos(lat1) * math.sin(lat2) - (math.sin(lat1) * math.cos(lat2) * math.cos(lon_change))
 
     bearing = math.degrees(math.atan2(x, y))
-    gps_angle = (bearing + 360) * 360
+    gps_angle = (bearing + 360) / 360
 
 
     print(abs(Angle_diff))
