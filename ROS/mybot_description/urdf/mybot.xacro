@@ -16,9 +16,9 @@
 
 	
 
+<!-- CHASSIS -->
 
-
-  <link name='chassis'>
+  <link name="chassis">
     <pose>0 0 0.1 0 0 0</pose>
     <inertial>
       <mass value="10.0"/>
@@ -48,13 +48,37 @@
     
   </link>
 
+<!-- CAMERA -->
+
+<link name="camera">
+        <collision name="collision_camera">
+                <origin xyz="0 0 0.028575" rpy="0 0 0" />
+                <geometry>
+                         <box size="0.1 0.1 0.1" />
+                </geometry>
+        </collision>
+	
+
+	<visual name="camera_visual">
+                <origin xyz="0 0 0.028575" rpy="0 0 0" />
+                <geometry>
+                        <box size="0.1 0.1 0.1" />
+                </geometry>
+        </visual>
+
+
+        <inertial>
+                <mass value="0.1" />
+                <origin xyz="0 0 0.0001" rpy="0 0 0"/>
+                <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                         iyy="0.0001" iyz="0.0"
+                         izz="0.0001" />
+        </inertial>
+</link>
 
 
 
-
-
-
-
+<!-- WHEEL LINKS -->
 
 
   <link name="left_wheel">
@@ -167,7 +191,7 @@
 
 
 
-
+<!-- WHEEL JOINTS -->
 
 
 
@@ -212,5 +236,19 @@
 
 
 
+
+<joint name="kinect_joint" type="fixed">
+        <origin xyz="-0.15 0 0.1" rpy="0 0 3.1414" />
+        <child link="camera" />
+        <parent link="chassis" />
+</joint>
+
+
+
+
+
+
+
+<!-- END -->
 
 </robot>

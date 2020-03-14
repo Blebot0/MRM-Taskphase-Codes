@@ -11,8 +11,7 @@ def cam1():
             time.sleep(0.01)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-    cap1.release()
-    cv2.destroyAllWindows()
+
 
 def cam2():
     cap2 = cv2.VideoCapture(0)
@@ -22,8 +21,7 @@ def cam2():
             cv2.imshow("output1",frame2)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-    cap2.release()
-    cv2.destroyAllWindows()
+
 
 
 

@@ -1,6 +1,5 @@
-import Gps_garmin
 import math
-import AngleHead
+from SENSORS import AngleHead, Gps_garmin
 import time
 math.degrees()
 time.sleep(3)
