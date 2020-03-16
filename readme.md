@@ -1,6 +1,6 @@
 # KESHAV'S REPOSITORY
 # Ball detection
-  *HOUGH_4.py has final tennis ball detection code.
+  HOUGH_4.py has final tennis ball detection code.
   *trackbar.py is for adjusting the frame
 # Compression
   *Sending video via sockets and compressing the video feed
