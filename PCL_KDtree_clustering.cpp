@@ -91,18 +91,94 @@ while (cloud_filtered->points.size () > 0.8 * nr_points )
 
 //CLUSTERING
   int j = 0;
-   pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster (new pcl::PointCloud<pcl::PointXYZ>);	  
+  pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_cluster (new pcl::PointCloud<pcl::PointXYZRGB>);	  
   
   for (std::vector<pcl::PointIndices>::const_iterator it = cluster_indices.begin (); it != cluster_indices.end (); ++it)
   {
     for (std::vector<int>::const_iterator pit = it->indices.begin (); pit != it->indices.end (); ++pit)
     {
-	    cloud_cluster->points.push_back (cloud_filtered->points[*pit]); 
+
+	    pcl::PointXYZRGB point;
+            point.x = cloud_filtered->points[*pit].x;
+            point.y = cloud_filtered->points[*pit].y;
+            point.z = cloud_filtered->points[*pit].z;
+
+	    if (j == 0) //Red	#FF0000	(255,0,0)
+			     {
+				      point.r = 0;
+				      point.g = 0;
+				      point.b = 255;
+			     }
+			    else if (j == 1) //Lime	#00FF00	(0,255,0)
+			     {
+				      point.r = 0;
+				      point.g = 255;
+				      point.b = 0;
+			     }
+			    else if (j == 2) // Blue	#0000FF	(0,0,255)
+			     {
+				      point.r = 255;
+				      point.g = 0;
+				      point.b = 0;
+			     }
+			    else if (j == 3) // Yellow	#FFFF00	(255,255,0)
+			     {
+				      point.r = 255;
+				      point.g = 255;
+				      point.b = 0;
+			     }
+			    else if (j == 4) //Cyan	#00FFFF	(0,255,255)
+			     {
+				      point.r = 0;
+				      point.g = 255;
+				      point.b = 255;
+			     }
+			    else if (j == 5) // Magenta	#FF00FF	(255,0,255)
+			     {
+				      point.r = 255;
+				      point.g = 0;
+				      point.b = 255;
+			     }
+			    else if (j == 6) // Olive	#808000	(128,128,0)
+		     	 {
+				      point.r = 128;
+				      point.g = 128;
+				      point.b = 0;
+			     }
+			    else if (j == 7) // Teal	#008080	(0,128,128)
+			     {
+				      point.r = 0;
+				      point.g = 128;
+				      point.b = 128;
+			     }
+			    else if (j == 8) // Purple	#800080	(128,0,128)
+		     	 {
+				      point.r = 128;
+				      point.g = 0;
+				      point.b = 128;
+			     }
+			    else
+		   	     {
+				      if (j % 2 == 0)
+				       {
+					        point.r = 255 * j / (cluster_indices.size());
+					        point.g = 128;
+					        point.b = 50;
+				       }
+				      else
+				       {
+					        point.r = 0;
+					        point.g = 255 * j / (cluster_indices.size());
+					        point.b = 128;
+				       }
+                 }
+	//    cloud_cluster->points.push_back (cloud_filtered->points[*pit]);
+			    cloud_cluster->push_back(point);
     }
 
-    cloud_cluster->width = cloud_cluster->points.size ();
-    cloud_cluster->height = 1;
-    cloud_cluster->is_dense = true;
+//    cloud_cluster->width = cloud_cluster->points.size ();
+//    cloud_cluster->height = 1;
+//    cloud_cluster->is_dense = true;
     
     j++;
   }
@@ -134,7 +210,7 @@ int main (int argc, char** argv)
   // Create a ROS publisher for the output point cloud
 //  pub = nh.advertise<sensor_msgs::PointCloud2> ("output", 1);
   pub1 = nh.advertise<pcl::PointCloud<pcl::PointXYZ> > ("/cloud_pcl", 100);
-  pub2 = nh.advertise<pcl::PointCloud<pcl::PointXYZ> > ("/cloud_pcl/clustered", 10); 
+  pub2 = nh.advertise<pcl::PointCloud<pcl::PointXYZRGB> > ("/cloud_pcl/clustered", 10); 
   pub = nh.advertise<pcl_msgs::ModelCoefficients> ("/model_coeff", 1);
   // Spin
   ros::spin ();
