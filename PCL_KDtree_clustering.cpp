@@ -37,7 +37,7 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
 //VOXEL
   pcl::VoxelGrid<pcl::PointXYZ> sor;
   sor.setInputCloud (cloud);
-  sor.setLeafSize (0.02, 0.02, 0.02);
+  sor.setLeafSize (0.01f, 0.01f, 0.01f);
   sor.filter (*cloud_filtered);
 
 //SAC SEGMENTATION
@@ -47,13 +47,12 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& input)
   seg.setModelType(pcl::SACMODEL_PLANE);
   seg.setMethodType(pcl::SAC_RANSAC);
   seg.setDistanceThreshold (0.01);
-  seg.setMaxIterations (1000);
+  seg.setMaxIterations (100);
 
 //EXTRACTION 
   
-  std::cout<<"1111111111111111111111111111111111111111111111111111111111111111111111111"; 
   int i = 0, nr_points = (int) cloud_filtered->points.size (); 
-while (cloud->points.size () > 0.3 * nr_points && nr_points>0)
+while (cloud_filtered->points.size () > 0.8 * nr_points )
   {
        
     pcl::ExtractIndices<pcl::PointXYZ> extract;
@@ -83,19 +82,19 @@ while (cloud->points.size () > 0.3 * nr_points && nr_points>0)
 
   std::vector<pcl::PointIndices> cluster_indices;
   pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
-  ec.setClusterTolerance (0.01); // 1cm
-  ec.setMinClusterSize (10);
-  ec.setMaxClusterSize (500000);
+  ec.setClusterTolerance (0.1); // 1cm
+  ec.setMinClusterSize (100);
+  ec.setMaxClusterSize (50000000);
   ec.setSearchMethod (tree);
   ec.setInputCloud (cloud_filtered);
   ec.extract (cluster_indices);
 
 //CLUSTERING
   int j = 0;
+   pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster (new pcl::PointCloud<pcl::PointXYZ>);	  
   
   for (std::vector<pcl::PointIndices>::const_iterator it = cluster_indices.begin (); it != cluster_indices.end (); ++it)
   {
-   pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster (new pcl::PointCloud<pcl::PointXYZ>);	  
     for (std::vector<int>::const_iterator pit = it->indices.begin (); pit != it->indices.end (); ++pit)
     {
 	    cloud_cluster->points.push_back (cloud_filtered->points[*pit]); 
@@ -104,10 +103,13 @@ while (cloud->points.size () > 0.3 * nr_points && nr_points>0)
     cloud_cluster->width = cloud_cluster->points.size ();
     cloud_cluster->height = 1;
     cloud_cluster->is_dense = true;
-    pub2.publish(*cloud_cluster);
     
     j++;
   }
+
+  cloud_cluster->header.frame_id = cloud->header.frame_id;
+  pub2.publish(*cloud_cluster);
+  
  std::cout<<j;
    // Publish the model coefficients
   pcl_msgs::ModelCoefficients ros_coefficients;
@@ -132,7 +134,7 @@ int main (int argc, char** argv)
   // Create a ROS publisher for the output point cloud
 //  pub = nh.advertise<sensor_msgs::PointCloud2> ("output", 1);
   pub1 = nh.advertise<pcl::PointCloud<pcl::PointXYZ> > ("/cloud_pcl", 100);
-  pub2 = nh.advertise<pcl::PointCloud<pcl::PointXYZ> > ("/cloud_pcl/clustered", 100); 
+  pub2 = nh.advertise<pcl::PointCloud<pcl::PointXYZ> > ("/cloud_pcl/clustered", 10); 
   pub = nh.advertise<pcl_msgs::ModelCoefficients> ("/model_coeff", 1);
   // Spin
   ros::spin ();
