@@ -85,3 +85,10 @@ if thresh_dist < 1.5:
             twist.linear.x = 0
             pub.publish(twist)
             break
+            
+'''
+This algorithm works after the alignment of the bot. It works in a while loop that I have omitted for now as I'll be making some changes to the codes soon. 
+var: thresh_dist was extracted from the range sensor using sensor message callback. 
+var: twist is an object to Twist message for control of the bot
+flag has been created to avoid repetition.
+'''
